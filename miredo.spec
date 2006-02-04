@@ -1,5 +1,5 @@
-#
 Summary:	IPv6 Tunneling daemon
+Summary(pl):	Demon do tunelowania IPv6
 Name:		miredo
 Version:	0.8.0
 Release:	1
@@ -12,9 +12,16 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Miredo is an open-source Teredo IPv6 tunneling software, for Linux and
-the BSD operating systems. It includes functionnal implementations of
+the BSD operating systems. It includes functional implementations of
 all components of the Teredo specification (client, relay and server).
 It is meant to provide IPv6 connectivity even from behind NAT devices.
+
+%description -l pl
+Miredo to oprogramowanie do tunelowania IPv6 Toredo z otwartymi
+¼ród³ami dla systemów operacyjnych Linux i BSD. Zawiera funkcjonalne
+implementacje wszystkich sk³adników specyfikacji Toredo (klienta,
+przeka¼nika i serwera). Ma dostarczyæ ³±czno¶æ z IPv6 nawet za
+urz±dzeniami NAT.
 
 %prep
 %setup -q
@@ -29,7 +36,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv $RPM_BUILD_ROOT/%{_sysconfdir}/%{name}-server.conf{-dist,}
+mv $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-server.conf{-dist,}
 
 %find_lang %{name}
 
@@ -38,8 +45,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%{_sysconfdir}/miredo-server.conf
-%{_sysconfdir}/miredo.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/miredo-server.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/miredo.conf
 %attr(755,root,root) %{_sbindir}/miredo
 %attr(755,root,root) %{_sbindir}/miredo-server
 %{_mandir}/man5/miredo-server.conf.5*
