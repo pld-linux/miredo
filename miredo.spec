@@ -1,10 +1,5 @@
 #
-# Conditional build:
-%bcond_with	tests		# build with tests
-%bcond_without	tests		# build without tests
-#
 Summary:	IPv6 Tunneling daemon
-Summary(pl):	-
 Name:		miredo
 Version:	0.8.0
 Release:	1
@@ -34,6 +29,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+mv $RPM_BUILD_ROOT/%{_sysconfdir}/%{name}-server.conf{-dist,}
+
 %find_lang %{name}
 
 %clean
@@ -41,7 +38,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%{_sysconfdir}/miredo-server.conf-dist
+%{_sysconfdir}/miredo-server.conf
 %{_sysconfdir}/miredo.conf
 %attr(755,root,root) %{_sbindir}/miredo
 %attr(755,root,root) %{_sbindir}/miredo-server
