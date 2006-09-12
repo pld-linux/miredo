@@ -5,7 +5,7 @@ Version:	0.8.0
 Release:	1
 License:	BSD
 Group:		Networking/Daemons
-Source0:	http://people.via.ecp.fr/~rem/miredo/v0.8/%{name}-%{version}.tar.bz2
+Source0:	http://www.remlab.net/files/miredo/archive/%{{name}-%{version}.tar.bz2
 # Source0-md5:	326664cb9af10a38806149b7bd565340
 URL:		http://www.simphalempin.com/dev/miredo/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
