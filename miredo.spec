@@ -1,5 +1,5 @@
 Summary:	IPv6 Tunneling daemon
-Summary(pl):	Demon do tunelowania IPv6
+Summary(pl.UTF-8):   Demon do tunelowania IPv6
 Name:		miredo
 Version:	0.8.0
 Release:	1
@@ -16,12 +16,12 @@ the BSD operating systems. It includes functional implementations of
 all components of the Teredo specification (client, relay and server).
 It is meant to provide IPv6 connectivity even from behind NAT devices.
 
-%description -l pl
+%description -l pl.UTF-8
 Miredo to oprogramowanie do tunelowania IPv6 Toredo z otwartymi
-¼ród³ami dla systemów operacyjnych Linux i BSD. Zawiera funkcjonalne
-implementacje wszystkich sk³adników specyfikacji Toredo (klienta,
-przeka¼nika i serwera). Ma dostarczyæ ³±czno¶æ z IPv6 nawet za
-urz±dzeniami NAT.
+ÅºrÃ³dÅ‚ami dla systemÃ³w operacyjnych Linux i BSD. Zawiera funkcjonalne
+implementacje wszystkich skÅ‚adnikÃ³w specyfikacji Toredo (klienta,
+przekaÅºnika i serwera). Ma dostarczyÄ‡ Å‚Ä…cznoÅ›Ä‡ z IPv6 nawet za
+urzÄ…dzeniami NAT.
 
 %prep
 %setup -q
