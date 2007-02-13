@@ -1,5 +1,5 @@
 Summary:	IPv6 Tunneling daemon
-Summary(pl.UTF-8):   Demon do tunelowania IPv6
+Summary(pl.UTF-8):	Demon do tunelowania IPv6
 Name:		miredo
 Version:	0.8.0
 Release:	1
