@@ -1,13 +1,14 @@
 Summary:	IPv6 Tunneling daemon
 Summary(pl.UTF-8):	Demon do tunelowania IPv6
 Name:		miredo
-Version:	0.8.0
+Version:	1.1.5
 Release:	1
 License:	BSD
 Group:		Networking/Daemons
 Source0:	http://www.remlab.net/files/miredo/archive/%{name}-%{version}.tar.bz2
-# Source0-md5:	326664cb9af10a38806149b7bd565340
+# Source0-md5:	c339a7dd24a985157e5e6c0dfd175a75
 URL:		http://www.simphalempin.com/dev/miredo/
+BuildRequires:	judy-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -36,20 +37,20 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-server.conf{-dist,}
-
 %find_lang %{name}
+
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/miredo-server.conf
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/miredo.conf
-%attr(755,root,root) %{_sbindir}/miredo
-%attr(755,root,root) %{_sbindir}/miredo-server
-%{_mandir}/man5/miredo-server.conf.5*
-%{_mandir}/man5/miredo.conf.5*
-%{_mandir}/man8/miredo-server.8*
-%{_mandir}/man8/miredo.8*
+%dir %{_sysconfdir}/miredo
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/miredo/*.conf
+%attr(755,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/miredo/client-hook
+%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) %{_libdir}/lib*.so.*
+%{_mandir}/man?/*.?*
