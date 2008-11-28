@@ -1,0 +1,89 @@
+#!/bin/sh
+#
+# miredo-server		This shell script takes care of starting and stopping miredo.
+#
+# chkconfig:	2345 80 30
+# description:	miredo-server is a Teredo IPv6 tunneling server
+#
+# processname:	miredo-server
+# config:
+# pidfile:
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network -a "$1" != stop -a "$1" != status ]; then
+		msg_network_down miredo-server
+		exit 1
+	fi
+else
+	exit 0
+fi
+
+start() {
+	# Start daemons.
+	if [ ! -f /var/lock/subsys/miredo-server ]; then
+		msg_starting miredo-server
+		daemon miredo-server -p /var/run/miredo-server.pid -u nobody
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/miredo-server
+	else
+		msg_already_running miredo-server
+	fi
+}
+
+stop() {
+	# Stop daemons.
+	if [ -f /var/lock/subsys/miredo-server ]; then
+		msg_stopping miredo-server
+		killproc miredo-server
+		rm -f /var/lock/subsys/miredo-server >/dev/null 2>&1
+	else
+		msg_not_running miredo-server
+	fi
+}
+
+condrestart() {
+	if [ -f /var/lock/subsys/miredo-server ]; then
+		stop
+		start
+	else
+		msg_not_running miredo-server
+		RETVAL=$1
+	fi
+}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
+	;;
+  restart)
+	stop
+	start
+	;;
+  try-restart)
+	condrestart 0
+	;;
+  force-reload)
+	condrestart 7
+	;;
+  status)
+	status miredo-server
+	exit $?
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|try-restart|force-reload|status}"
+	exit 3
+esac
+
+exit $RETVAL
