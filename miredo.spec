@@ -83,6 +83,7 @@ Summary:	Development files for miredo
 Summary(pl.UTF-8):	Pliki programistyczne dla miredo
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
+Requires:	judy-devel
 
 %description devel
 Development files for miredo.
@@ -191,15 +192,21 @@ fi
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so.*
+%attr(755,root,root) %{_libdir}/libteredo.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libteredo.so.3
+%attr(755,root,root) %{_libdir}/libtun6.so.*
+%attr(755,root,root) %ghost %{_libdir}/libtun6.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/libteredo.so
+%attr(755,root,root) %{_libdir}/libtun6.so
+%{_libdir}/libteredo.la
+%{_libdir}/libtun6.la
 %{_includedir}/libteredo
 %{_includedir}/libtun6
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libteredo.a
+%{_libdir}/libtun6.a
