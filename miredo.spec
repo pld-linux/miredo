@@ -34,49 +34,73 @@ Ten pakiet zawiera serwer Teredo.
 
 %package common
 Summary:	Common Miredo files
+Summary(pl.UTF-8):	Wspólne pliki Miredo
 Group:		Daemons
 
 %description common
 Common Miredo files.
 
+%description common -l pl.UTF-8
+Wspólne pliki Miredo.
+
 %package client-teredo
 Summary:	Miredo Teredo client
+Summary(pl.UTF-8):	Klient Miredo Teredo
 Group:		Daemons
 Requires:	%{name}-common = %{version}-%{release}
 
 %description client-teredo
 Miredo Teredo client.
 
+%description client-teredo -l pl.UTF-8
+Klient Miredo Teredo.
+
 %package client-isatap
 Summary:	Miredo ISATAP client
+Summary(pl.UTF-8):	Klient Miredo ISATAP
 Group:		Daemons
 Requires:	%{name}-common = %{version}-%{release}
 
 %description client-isatap
 Miredo ISATAP client.
 
+%description client-isatap -l pl.UTF-8
+Klient Miredo ISATAP.
+
 %package libs
 Summary:	Miredo libraries
+Summary(pl.UTF-8):	Biblioteki Miredo
 Group:		Libraries
 
 %description libs
 Miredo libraries.
 
+%description libs -l pl.UTF-8
+Biblioteki Miredo.
+
 %package devel
 Summary:	Development files for miredo
+Summary(pl.UTF-8):	Pliki programistyczne dla miredo
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
 Development files for miredo.
 
+%description devel -l pl.UTF-8
+Pliki programistyczne dla miredo.
+
 %package static
 Summary:	Static miredo libraries
+Summary(pl.UTF-8):	Statyczne biblioteki miredo
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static miredo libraries.
+
+%description static -l pl.UTF-8
+Statyczne biblioteki miredo.
 
 %prep
 %setup -q
@@ -87,7 +111,6 @@ Static miredo libraries.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 
 %{__make} install \
@@ -98,6 +121,9 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}-teredo
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}-isatapd
 
 %find_lang %{name}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add miredo-server
@@ -129,21 +155,17 @@ if [ "$1" = "0" ]; then
         /sbin/chkconfig --del miredo-isatapd
 fi
 
-%post libs -p /sbin/ldconfig
-%postun libs -p /sbin/ldconfig
-
-%clean
-rm -rf $RPM_BUILD_ROOT
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
-%dir %{_sysconfdir}/miredo
 %attr(755,root,root) %{_sbindir}/miredo-server
+%attr(754,root,root) /etc/rc.d/init.d/miredo-server
 %{_mandir}/man5/miredo-server.conf.5*
 %{_mandir}/man8/miredo-server.8*
-%attr(754,root,root) /etc/rc.d/init.d/miredo-server
 
-%files -f %{name}.lang common
+%files common -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/teredo-mire
 %attr(755,root,root) %{_sbindir}/miredo-checkconf
@@ -156,16 +178,16 @@ rm -rf $RPM_BUILD_ROOT
 %files client-teredo
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/miredo
+%attr(754,root,root) /etc/rc.d/init.d/miredo-teredo
 %{_mandir}/man5/miredo.conf.5*
 %{_mandir}/man8/miredo.8*
-%attr(754,root,root) /etc/rc.d/init.d/miredo-teredo
 
 %files client-isatap
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/isatapd
+%attr(754,root,root) /etc/rc.d/init.d/miredo-isatapd
 %{_mandir}/man5/isatapd.conf.5*
 %{_mandir}/man8/isatapd.8*
-%attr(754,root,root) /etc/rc.d/init.d/miredo-isatapd
 
 %files libs
 %defattr(644,root,root,755)
@@ -173,10 +195,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/libteredo
-%{_includedir}/libtun6
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
+%{_includedir}/libteredo
+%{_includedir}/libtun6
 
 %files static
 %defattr(644,root,root,755)
