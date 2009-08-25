@@ -146,7 +146,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/teredo-mire
 %attr(755,root,root) %{_sbindir}/miredo-checkconf
-%{_libdir}/miredo/miredo-privproc
+%attr(755,root,root) %{_libdir}/miredo/miredo-privproc
 %dir %{_sysconfdir}/miredo
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/miredo/miredo.conf
 %attr(755,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/miredo/client-hook
