@@ -1,15 +1,14 @@
 Summary:	IPv6 Tunneling daemon
 Summary(pl.UTF-8):	Demon do tunelowania IPv6
 Name:		miredo
-Version:	1.1.5
+Version:	1.1.7
 Release:	1
 License:	BSD
 Group:		Networking/Daemons
 Source0:	http://www.remlab.net/files/miredo/archive/%{name}-%{version}.tar.bz2
-# Source0-md5:	c339a7dd24a985157e5e6c0dfd175a75
+# Source0-md5:	4fb5e7df6a6255528e4c5380401ad3ea
 Source1:	%{name}-server.init
 Source2:	%{name}-teredo.init
-Source3:	%{name}-isatapd.init
 URL:		http://www.simphalempin.com/dev/miredo/
 BuildRequires:	judy-devel
 Requires:	%{name}-common = %{version}-%{release}
@@ -54,18 +53,6 @@ Miredo Teredo client.
 
 %description client-teredo -l pl.UTF-8
 Klient Miredo Teredo.
-
-%package client-isatap
-Summary:	Miredo ISATAP client
-Summary(pl.UTF-8):	Klient Miredo ISATAP
-Group:		Daemons
-Requires:	%{name}-common = %{version}-%{release}
-
-%description client-isatap
-Miredo ISATAP client.
-
-%description client-isatap -l pl.UTF-8
-Klient Miredo ISATAP.
 
 %package libs
 Summary:	Miredo libraries
@@ -119,7 +106,6 @@ install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}-server
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}-teredo
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}-isatapd
 
 %find_lang %{name}
 
@@ -146,16 +132,6 @@ if [ "$1" = "0" ]; then
         /sbin/chkconfig --del miredo-teredo
 fi
 
-%post client-isatap
-/sbin/chkconfig --add miredo-isatapd
-%service miredo-isatapd restart
-
-%preun client-isatap
-if [ "$1" = "0" ]; then
-        %service miredo-isatapd stop
-        /sbin/chkconfig --del miredo-isatapd
-fi
-
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
 
@@ -170,6 +146,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/teredo-mire
 %attr(755,root,root) %{_sbindir}/miredo-checkconf
+%{_libdir}/miredo/miredo-privproc
 %dir %{_sysconfdir}/miredo
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/miredo/miredo.conf
 %attr(755,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/miredo/client-hook
@@ -183,19 +160,10 @@ fi
 %{_mandir}/man5/miredo.conf.5*
 %{_mandir}/man8/miredo.8*
 
-%files client-isatap
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_sbindir}/isatapd
-%attr(754,root,root) /etc/rc.d/init.d/miredo-isatapd
-%{_mandir}/man5/isatapd.conf.5*
-%{_mandir}/man8/isatapd.8*
-
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libteredo.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libteredo.so.3
 %attr(755,root,root) %{_libdir}/libtun6.so.*
-%attr(755,root,root) %ghost %{_libdir}/libtun6.so.0
 
 %files devel
 %defattr(644,root,root,755)
