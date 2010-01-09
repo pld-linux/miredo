@@ -1,12 +1,12 @@
 Summary:	IPv6 Tunneling daemon
 Summary(pl.UTF-8):	Demon do tunelowania IPv6
 Name:		miredo
-Version:	1.1.7
+Version:	1.2.2
 Release:	1
 License:	BSD
 Group:		Networking/Daemons
 Source0:	http://www.remlab.net/files/miredo/archive/%{name}-%{version}.tar.bz2
-# Source0-md5:	4fb5e7df6a6255528e4c5380401ad3ea
+# Source0-md5:	a04a40c4b42869968e00495636ff6d82
 Source1:	%{name}-server.init
 Source2:	%{name}-teredo.init
 URL:		http://www.simphalempin.com/dev/miredo/
@@ -146,6 +146,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/teredo-mire
 %attr(755,root,root) %{_sbindir}/miredo-checkconf
+%dir %{_libdir}/miredo
 %attr(755,root,root) %{_libdir}/miredo/miredo-privproc
 %dir %{_sysconfdir}/miredo
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/miredo/miredo.conf
