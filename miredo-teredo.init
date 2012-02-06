@@ -6,8 +6,6 @@
 # description:	miredo is a Teredo IPv6 tunneling daemon
 #
 # processname:	miredo
-# config:
-# pidfile:
 
 # Source function library.
 . /etc/rc.d/init.d/functions

@@ -6,8 +6,6 @@
 # description:	miredo-server is a Teredo IPv6 tunneling server
 #
 # processname:	miredo-server
-# config:
-# pidfile:
 
 # Source function library.
 . /etc/rc.d/init.d/functions
